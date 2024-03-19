@@ -24,12 +24,13 @@ public class PessoaJuridicaRepo {
         inserir(pessoa);
     }
     
-    public void excluir(int idPessoaJ){
+    public boolean excluir(int idPessoaJ){
         for(PessoaJuridica pessoa : listaPessoasJuridicas){
             if(pessoa.getId() == idPessoaJ){
-                listaPessoasJuridicas.remove(pessoa);
+                return listaPessoasJuridicas.remove(pessoa);
             }
         }
+        return false;
     }
     
     public PessoaJuridica obter(int id){
@@ -57,7 +58,7 @@ public class PessoaJuridicaRepo {
         objOutput.writeObject(listaPessoasJuridicas);
         objOutput.close();
         
-        System.out.println("Dados de Pessoa Juridica Recuperados.");
+        //System.out.println("Dados de Pessoa Juridica Armazenados.");
     }
     
     public void recuperar(String nomeArquivo) throws IOException, ClassNotFoundException{
@@ -69,6 +70,19 @@ public class PessoaJuridicaRepo {
             objInput.close();
         }
         
-        System.out.println("Dados de Pessoa Juridica Armazenados.");
+        //System.out.println("Dados de Pessoa Juridica Recuperados.");
+    }
+    
+    public boolean verificaIdCadastrado(int id){
+        for(var pj : listaPessoasJuridicas){
+            if(pj.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean verificaListaVazia(){
+        return listaPessoasJuridicas.isEmpty();
     }
 }
